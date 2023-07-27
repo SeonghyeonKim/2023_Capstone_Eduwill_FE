@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import java.text.DecimalFormat
 
 class ProductAdapter(private val context: Context) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     var datas = mutableListOf<ProductData>()
@@ -24,13 +25,15 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val txtName: TextView = itemView.findViewById(R.id.img_rv_name)
-        private val txtAge: TextView = itemView.findViewById(R.id.img_rv_imform)
-        private val imgProduct: ImageView = itemView.findViewById(R.id.img_rv_photo)
+        private val txtName: TextView = itemView.findViewById(R.id.rv_name)
+        private val txtInform: TextView = itemView.findViewById(R.id.rv_imform)
+        private val imgProduct: ImageView = itemView.findViewById(R.id.rv_photo)
+        private val txtPrice: TextView = itemView.findViewById(R.id.rv_price)
 
         fun bind(item: ProductData) {
             txtName.text = item.name
-            txtAge.text = item.inform
+            txtInform.text = item.inform
+            txtPrice.text = DecimalFormat("###,###").format(item.price).toString() + "원"
             Glide.with(itemView).load(item.img).into(imgProduct)
 
             itemView.setOnClickListener {
