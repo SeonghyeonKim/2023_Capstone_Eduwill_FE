@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import java.text.DecimalFormat
 
 class ProductAdapter(private val context: Context) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     var datas = mutableListOf<ProductData>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.rv_item, parent,false)
         return ViewHolder(view)
@@ -34,7 +36,9 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
             txtName.text = item.name
             txtInform.text = item.inform
             txtPrice.text = DecimalFormat("###,###").format(item.price).toString() + "원"
-            Glide.with(itemView).load(item.img).into(imgProduct)
+
+            val imgSource: Int = context.resources.getIdentifier(item.img,"drawable", context.packageName)
+            Glide.with(itemView).load(imgSource).into(imgProduct)
 
             itemView.setOnClickListener {
                 Intent(context, DetailActivity::class.java).apply {

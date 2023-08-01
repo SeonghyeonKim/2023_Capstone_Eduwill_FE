@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             android:text="NeRF를 이용한 중고나라 플랫폼"
             android:layout_gravity="center"
-            android:gravity="center">
+            android:gravity="center"
+            android:id="@+id/title">
         </TextView>
     </LinearLayout>
 
