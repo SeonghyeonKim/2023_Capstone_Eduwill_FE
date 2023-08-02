@@ -1,8 +1,8 @@
 package com.example.frontend
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -10,10 +10,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.frontend.databinding.ActivityMainBinding
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import org.json.JSONArray
-import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
     lateinit var adapter: ProductAdapter
@@ -28,6 +25,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+        binding.rvAddButton.setOnClickListener({
+            val intent = Intent(this, AdditionActivity::class.java)
+            startActivity(intent)
+        })
 
         initHttpRequest()
         setContentView(binding.root)
@@ -74,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 return params
             }
         }
-        request.setShouldCache(true)
+        request.setShouldCache(false)
         requestQueue?.add(request)
     }
 
