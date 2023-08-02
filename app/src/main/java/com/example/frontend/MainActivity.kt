@@ -3,6 +3,7 @@ package com.example.frontend
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -26,10 +27,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-        binding.rvAddButton.setOnClickListener({
+        binding.rvAddButton.setOnClickListener {
+            requestQueue?.stop()
+
             val intent = Intent(this, AdditionActivity::class.java)
             startActivity(intent)
-        })
+        }
 
         initHttpRequest()
         setContentView(binding.root)
@@ -68,7 +71,7 @@ class MainActivity : AppCompatActivity() {
                 }
             },
             Response.ErrorListener {
-                json = it.toString()
+                Toast.makeText(this, "불러오기에 실패했습니다.", Toast.LENGTH_LONG).show()
             }
         ) {
             override fun getParams(): MutableMap<String, String> {
