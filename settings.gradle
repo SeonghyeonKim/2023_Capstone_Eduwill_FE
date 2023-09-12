@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "FrontEnd"
-include ':app'
+include ':app', ':unityLibrary'
