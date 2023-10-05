@@ -12,7 +12,6 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.frontend.databinding.ActivityMainBinding
 import org.json.JSONArray
-import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
     lateinit var adapter: ProductAdapter
@@ -29,24 +28,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         binding.rvAddButton.setOnClickListener {
-            requestQueue?.stop()
-
             val intent = Intent(this, AdditionActivity::class.java)
             startActivity(intent)
         }
 
-        binding.title.setOnClickListener {
-            httpRequestMakeRV()
-        }
-
         initHttpRequest()
         setContentView(binding.root)
-
         initRecycler()
     }
 
     fun initHttpRequest() {
-        requestQueue = Volley.newRequestQueue(this)
+        requestQueue = Volley.newRequestQueue(applicationContext)
     }
 
     fun httpRequestMakeRV() {
@@ -97,8 +89,7 @@ class MainActivity : AppCompatActivity() {
         // HTTP 요청 - 전체 파일을 받아 리사이클러 뷰 생성
         httpRequestMakeRV()
 
-
-        // 내장 json 접근
+        /* 내장 json 접근
         json = assets.open("product_datas.json").reader().readText()
         val productCount = JSONObject(json).getInt("count")
         val productDataArray = JSONObject(json).getJSONArray("product")
@@ -122,6 +113,6 @@ class MainActivity : AppCompatActivity() {
             adapter.datas = datas
             adapter.notifyDataSetChanged()
         }
-
+         */
     }
 }
