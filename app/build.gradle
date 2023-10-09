@@ -55,4 +55,6 @@ dependencies {
     // unity
     implementation project(':unityLibrary')
     implementation fileTree(dir: project(':unityLibrary').getProjectDir().toString() + ('\\libs'), include: ['*.jar'])
+
+    implementation 'com.google.ar:core:1.11.0'
 }

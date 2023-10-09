@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "FrontEnd"
-include ':app', ':unityLibrary'
+include ':app', ':unityLibrary',':unity-classes', ':arcore_client',':ARPresto',':UnityARCore',':unityandroidpermissions'
