@@ -20,6 +20,7 @@
             android:background="#f0f0f0"
             android:layout_gravity="center"
             android:tooltipText="눌러서 동영상을 추가하세요"
+            android:clickable="true"
             android:id="@+id/add_img"/>
     </LinearLayout>
 
