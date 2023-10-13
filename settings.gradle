@@ -5,12 +5,20 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
+rootProject.name = "FrontEnd"
+include ':app', ':unityLibrary'
+project(':unityLibrary').projectDir = new File('.\\ar_test_export\\unityLibrary')
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
+        jcenter()
+
+        flatDir {
+            dirs "${project(':unityLibrary').projectDir}/libs"
+        }
     }
 }
-rootProject.name = "FrontEnd"
-include ':app', ':unityLibrary',':unity-classes', ':arcore_client',':ARPresto',':UnityARCore',':unityandroidpermissions'

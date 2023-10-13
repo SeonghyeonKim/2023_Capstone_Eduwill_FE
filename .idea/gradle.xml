@@ -10,13 +10,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/ARPresto" />
-            <option value="$PROJECT_DIR$/UnityARCore" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/arcore_client" />
-            <option value="$PROJECT_DIR$/unity-classes" />
-            <option value="$PROJECT_DIR$/unityLibrary" />
-            <option value="$PROJECT_DIR$/unityandroidpermissions" />
+            <option value="$PROJECT_DIR$/ar_test_export/unityLibrary" />
           </set>
         </option>
       </GradleProjectSettings>
