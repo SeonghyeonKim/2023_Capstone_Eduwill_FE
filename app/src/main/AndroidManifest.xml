@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,9 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FrontEnd"
-        tools:targetApi="31"
-        android:usesCleartextTraffic="true"
-        tools:node="replace">
+        tools:targetApi="31">
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -30,21 +30,19 @@
         <activity android:name=".AdditionActivity"
             android:exported="true">
         </activity>
-        <activity android:name="com.unity3d.player.UnityPlayerActivity"
-            android:required="true"
+        <activity
+            android:name=".OpenUnityActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.unity3d.player.UnityPlayerActivity"
             android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
-
-    <uses-feature android:name="android.hardware.camera.ar" android:required="true" />
-    <uses-feature android:name="com.google.ar.core.depth" android:required="true" />
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" />
-    <uses-permission android:name="android.permission.CAMERA" />
 </manifest>

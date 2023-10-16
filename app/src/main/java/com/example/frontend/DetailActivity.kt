@@ -24,7 +24,8 @@ class DetailActivity : AppCompatActivity() {
         binding.detailPrice.text = DecimalFormat("###,###").format(datas.price).toString() + "원"
 
         binding.detailUnityBtn.setOnClickListener {
-            val intent = Intent(this, UnityPlayerActivity::class.java)
+            val intent = Intent(this, OpenUnityActivity::class.java)
+            intent.putExtra("message", datas.id.toString())
             startActivity(intent)
         }
 
