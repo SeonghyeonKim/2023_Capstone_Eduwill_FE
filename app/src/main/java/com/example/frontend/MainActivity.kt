@@ -16,7 +16,7 @@ import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
     lateinit var adapter: ProductAdapter
-    val datas = mutableListOf<ProductData>()
+    var datas = mutableListOf<ProductData>()
     private lateinit var binding: ActivityMainBinding
 
     lateinit var json: String
@@ -33,6 +33,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.title.setOnClickListener {
+            initRecycler()
+        }
+
         initHttpRequest()
         setContentView(binding.root)
         initRecycler()
@@ -45,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     fun httpRequestMakeRV() {
         val request = object: StringRequest(
             Request.Method.GET,
-            "http://172.22.54.97:3389/postList",
+            "http://172.22.3.83:3389/postList",
             Response.Listener<String> {
                 json = it
 
@@ -55,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
                         add(ProductData(
                             id = jsonObject.getInt("id"),
-                            img = "product${i%8+1}",
+                            img = "ic_launcher_foreground",
                             name = jsonObject.getString("title"),
                             inform = jsonObject.getString("content"),
                             price = jsonObject.getInt("price"),
@@ -70,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                 }
             },
             Response.ErrorListener {
-                Toast.makeText(this, "불러오기에 실패했습니다.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, it.toString(), Toast.LENGTH_LONG).show()
             }
         ) {
             override fun getParams(): MutableMap<String, String> {
@@ -86,11 +90,12 @@ class MainActivity : AppCompatActivity() {
         adapter = ProductAdapter(this)
         val ProductList: RecyclerView = findViewById(R.id.ProductList)
         ProductList.adapter = adapter
+        datas = mutableListOf<ProductData>()
 
         // HTTP 요청 - 전체 파일을 받아 리사이클러 뷰 생성
         httpRequestMakeRV()
 
-
+        /*
         // 내장 json 접근
         json = assets.open("product_datas.json").reader().readText()
         val productCount = JSONObject(json).getInt("count")
@@ -115,6 +120,6 @@ class MainActivity : AppCompatActivity() {
             adapter.datas = datas
             adapter.notifyDataSetChanged()
         }
-
+        */
     }
 }
