@@ -1,41 +1,33 @@
 package com.example.frontend
 
-import android.app.Instrumentation.ActivityResult
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.android.volley.NetworkResponse
-import com.android.volley.NoConnectionError
 import com.android.volley.Request
-import com.android.volley.RequestQueue
 import com.android.volley.Response
-import com.android.volley.TimeoutError
 import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
-import com.example.VolleyMultipartRequest
 import com.example.frontend.databinding.ActivityAdditionBinding
-import org.json.JSONArray
-import org.json.JSONException
-import org.json.JSONObject
+import java.io.IOException
 
 class AdditionActivity: AppCompatActivity() {
     private lateinit var binding: ActivityAdditionBinding
 
     lateinit var uri: Uri
+    private var imageData: ByteArray? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdditionBinding.inflate(layoutInflater)
 
         binding.addUpdateBtn.setOnClickListener {
-            httpRequestSend()
+            httpRequestSend_test()
         }
 
         binding.addImg.setOnClickListener {
@@ -78,10 +70,6 @@ class AdditionActivity: AppCompatActivity() {
                 params["ySize"] = binding.addYSize.text.toString()
                 params["zSize"] = binding.addZSize.text.toString()
 
-                params["title"]?.let { Log.d("제목", it) }
-                params["xSize"]?.let { Log.d("크기", it) }
-                params["price"]?.let { Log.d("가격", it) }
-
                 return params
             }
         }
@@ -91,7 +79,7 @@ class AdditionActivity: AppCompatActivity() {
     }
 
     fun httpRequestSend_test() {
-        val request = object : VolleyMultipartRequest(
+        val request = object : VolleyFileUploadRequest(
             Request.Method.POST,
             "http://172.22.3.83:3389/upload",
             Response.Listener {
@@ -104,7 +92,7 @@ class AdditionActivity: AppCompatActivity() {
         ) {
             override fun getParams(): MutableMap<String, String> {
                 val params = HashMap<String, String>()
-                params["userId"] = "12"
+                params["userId"] = "10"
                 params["title"] = binding.addName.text.toString()
                 params["content"] = binding.addInform.text.toString()
                 params["price"] = binding.addPrice.text.toString()
@@ -115,14 +103,27 @@ class AdditionActivity: AppCompatActivity() {
 
                 return params
             }
+            override fun getByteData(): MutableMap<String, FileDataPart> {
+                var params = HashMap<String, FileDataPart>()
+                params["video"] = FileDataPart("video", imageData!!, "mp4")
+                params["image_1"] = FileDataPart("", imageData!!, "jpg")
+                params["image_2"] = FileDataPart("", imageData!!, "jpg")
+                params["image_3"] = FileDataPart("", imageData!!, "jpg")
+                params["image_4"] = FileDataPart("", imageData!!, "jpg")
+                params["image_5"] = FileDataPart("", imageData!!, "jpg")
 
-            override fun getByteData(): Map<String, DataPart>? {
-                return super.getByteData()
+                return params
             }
         }
-        // 이미 받은 응답 재사용
-        request.setShouldCache(false)
         MainActivity.requestQueue?.add(request)
+    }
+
+    @Throws(IOException::class)
+    private fun createImageData(uri: Uri) {
+        val inputStream = contentResolver.openInputStream(uri)
+        inputStream?.buffered()?.use {
+            imageData = it.readBytes()
+        }
     }
 
     private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(
@@ -134,7 +135,8 @@ class AdditionActivity: AppCompatActivity() {
             Glide.with(this)
                 .load(uri)
                 .into(binding.addImg)
-        }
 
+            createImageData(uri)
+        }
     }
 }
