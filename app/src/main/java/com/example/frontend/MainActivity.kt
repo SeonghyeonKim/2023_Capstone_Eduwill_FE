@@ -60,8 +60,8 @@ class MainActivity : AppCompatActivity() {
                         add(ProductData(
                             id = jsonObject.getInt("id"),
                             img = "ic_launcher_foreground",
-                            name = jsonObject.getString("title"),
-                            inform = jsonObject.getString("content"),
+                            name = String(jsonObject.getString("title").toByteArray(Charsets.ISO_8859_1), Charsets.UTF_8),
+                            inform = String(jsonObject.getString("content").toByteArray(Charsets.ISO_8859_1), Charsets.UTF_8),
                             price = jsonObject.getInt("price"),
                             xSize = 250.0,
                             ySize = 250.0,
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
         // HTTP 요청 - 전체 파일을 받아 리사이클러 뷰 생성
         httpRequestMakeRV()
 
-        /*
+
         // 내장 json 접근
         json = assets.open("product_datas.json").reader().readText()
         val productCount = JSONObject(json).getInt("count")
@@ -120,6 +120,7 @@ class MainActivity : AppCompatActivity() {
             adapter.datas = datas
             adapter.notifyDataSetChanged()
         }
-        */
+
+
     }
 }

@@ -1,20 +1,21 @@
 package com.example.frontend
 
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.NetworkResponse
 import com.android.volley.Request
 import com.android.volley.Response
+import com.android.volley.toolbox.HttpHeaderParser
 import com.android.volley.toolbox.StringRequest
 import com.bumptech.glide.Glide
 import com.example.frontend.databinding.ActivityAdditionBinding
 import java.io.IOException
+import java.nio.charset.Charset
 
 class AdditionActivity: AppCompatActivity() {
     private lateinit var binding: ActivityAdditionBinding
@@ -27,6 +28,7 @@ class AdditionActivity: AppCompatActivity() {
         binding = ActivityAdditionBinding.inflate(layoutInflater)
 
         binding.addUpdateBtn.setOnClickListener {
+            Toast.makeText(this, "등록중입니다...", Toast.LENGTH_LONG).show()
             httpRequestSend_test()
         }
 
